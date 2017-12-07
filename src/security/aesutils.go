@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"crypto/aes"
 	"crypto/cipher"
-	"fmt"
 )
 
 func AesEncrypt(origData, key []byte, iv []byte) ([]byte, error) {
@@ -24,12 +23,8 @@ func AesEncrypt(origData, key []byte, iv []byte) ([]byte, error) {
 }
 
 func AesDecrypt(crypted, key []byte, iv []byte) ([]byte, error) {
-	fmt.Println("len(crypted)",len(crypted))
-	fmt.Println("key",key)
-	fmt.Println("iv",iv)
 	block, err := aes.NewCipher(key)
 	if err != nil {
-		fmt.Println("err",err)
 		return nil, err
 	}
 	blockMode := cipher.NewCBCDecrypter(block, iv)

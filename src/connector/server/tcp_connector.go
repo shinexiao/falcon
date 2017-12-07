@@ -13,7 +13,7 @@ import (
 	"connector/dispatcher"
 	"connector/handler"
 	"strings"
-	"connector/core"
+	"core"
 )
 
 const MaxPacketSize = 1024 * 1024
@@ -33,10 +33,12 @@ type TcpConnector struct {
 func NewTcpConnector(context core.FalconContext, options ConnectorOptions) *TcpConnector {
 
 	messageDispatcher := dispatcher.NewMessageDispatcher()
-	messageDispatcher.Register(protocol.CMD_HANDSHAKE, handler.NewHandshakeHandler(context)) // 握手
-	messageDispatcher.Register(protocol.CMD_HEARTBEAT, handler.NewHeartBeatHandler())        // 心跳
-	messageDispatcher.Register(protocol.CMD_BIND, handler.NewBindUserHandler())              // 绑定
-	messageDispatcher.Register(protocol.CMD_UNBIND, handler.NewBindUserHandler())            // 解绑
+	messageDispatcher.Register(protocol.CMD_HANDSHAKE, handler.NewHandshakeHandler(context))      // 握手
+	messageDispatcher.Register(protocol.CMD_HEARTBEAT, handler.NewHeartBeatHandler())             // 心跳
+	messageDispatcher.Register(protocol.CMD_BIND, handler.NewBindUserHandler())                   // 绑定
+	messageDispatcher.Register(protocol.CMD_UNBIND, handler.NewBindUserHandler())                 // 解绑
+	messageDispatcher.Register(protocol.CMD_ACK, handler.NewAckHandler(context))                  //消息ack
+	messageDispatcher.Register(protocol.CMD_FAST_CONNECT, handler.NewFastConnectHandler(context)) //快速重连
 
 	return &TcpConnector{
 		messageDispatcher: messageDispatcher,
@@ -152,7 +154,7 @@ func (me *TcpConnector) serve(conn *connection.Conn) {
 			//循环读取数据
 			tempBuf = append(tempBuf, buffer[:n]...)
 			//解码数据包
-			me.unpack(tempBuf, readChan)
+			tempBuf = me.unpack(tempBuf, readChan)
 
 		}
 	}
@@ -193,7 +195,7 @@ func (me *TcpConnector) unpack(buf []byte, ch chan *protocol.Packet) []byte {
 
 	ch <- packet
 
-	return buf[protocol.PACKET_HEADER_LEN+int(bodyLength):]
+	return buf[total:]
 }
 
 //输出日志

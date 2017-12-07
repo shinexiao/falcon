@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/binary"
 	"github.com/pkg/errors"
-	"fmt"
 )
 
 const INT16_MAX_VALUE = 32767
@@ -86,7 +85,6 @@ func (me *ByteBufMessage) DecodeBytes(buf *bytes.Buffer) []byte {
 	var err error
 	err = binary.Read(buf, binary.BigEndian, &length)
 	checkError(err, "DecodeBytes read int16")
-	fmt.Println("length", length)
 	if length == 0 {
 		return nil
 	}
@@ -98,10 +96,7 @@ func (me *ByteBufMessage) DecodeBytes(buf *bytes.Buffer) []byte {
 		err = binary.Read(buf, binary.BigEndian, &length2)
 		checkError(err, "DecodeBytes read int32")
 		total = total + int(length2)
-		fmt.Println("length2", length2)
 	}
-
-	fmt.Println("total", total)
 
 	data := make([]byte, total)
 	err = binary.Read(buf, binary.BigEndian, data)

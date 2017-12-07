@@ -7,7 +7,7 @@ import (
 	"security"
 	"session"
 	"github.com/gogap/logrus"
-	"connector/core"
+	"core"
 )
 
 /**

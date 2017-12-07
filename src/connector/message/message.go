@@ -97,10 +97,10 @@ func (me *BaseMessage) EncodeBody() {
 		me.Status |= STATUS_ENCODED
 	}
 	tmp := me.Child.Encode()
-	length := len(tmp)
-	if tmp != nil && length > 0 {
+
+	if tmp != nil && len(tmp) > 0 {
 		//1.压缩
-		if length > CompressLimit {
+		if len(tmp) > CompressLimit {
 			result := common.Compress(tmp)
 			if len(result) > 0 {
 				tmp = result

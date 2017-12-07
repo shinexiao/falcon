@@ -14,17 +14,13 @@ type BindUserMessage struct {
 }
 
 //创建消息
-func NewBindUserMessage(conn *connection.Conn) *BindUserMessage {
+func NewBindUserMessage(packet *protocol.Packet, conn *connection.Conn) *BindUserMessage {
 
 	msg := &BindUserMessage{}
-
-	packet := protocol.NewPacket(protocol.CMD_BIND)
-	packet.SessionId = msg.GenSessionId()
-
 	msg.packet = packet
 	msg.conn = conn
 	msg.BaseMessage.Child = msg
-	
+
 	return msg
 }
 

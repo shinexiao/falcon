@@ -3,6 +3,7 @@ package server
 import (
 	"cache"
 	"session"
+	"ack"
 )
 
 type FalconServer struct {
@@ -32,4 +33,12 @@ func (me *FalconServer) CacheManager() cache.CacheManager {
 func (me *FalconServer) ReusableSessionManager() *session.ReusableSessionManager {
 
 	return me.reusableSessionManager
+}
+
+/**
+ * 返回任务管理队列
+ */
+func (me *FalconServer) AckTaskQueue() *ack.AckTaskQueue {
+
+	return ack.NewAckTaskQueue()
 }

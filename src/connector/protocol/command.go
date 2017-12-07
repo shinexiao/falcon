@@ -1,19 +1,19 @@
 package protocol
 
 const (
-	CMD_HEARTBEAT int8 = 1  //心跳
-	CMD_HANDSHAKE int8 = 2  //握手
-	CMD_BIND      int8 = 5  //绑定用户
-	CMD_UNBIND    int8 = 6  //解绑用户
-	CMD_ERROR     int8 = 10 //错误信息
-	CMD_OK        int8 = 11 //成功信息
-	CMD_ACK       int8 = 23 //ack消息
-	CMD_NACK      int8 = 24 //nack消息
+	CMD_HEARTBEAT    int8 = 1  //心跳
+	CMD_HANDSHAKE    int8 = 2  //握手
+	CMD_BIND         int8 = 5  //绑定用户
+	CMD_UNBIND       int8 = 6  //解绑用户
+	CMD_FAST_CONNECT int8 = 7  //快速重连
+	CMD_ERROR        int8 = 10 //错误信息
+	CMD_OK           int8 = 11 //成功信息
+	CMD_ACK          int8 = 23 //ack消息
+	CMD_NACK         int8 = 24 //nack消息
 )
 
 //LOGIN(3),
 //LOGOUT(4),
-//FAST_CONNECT(7),
 //PAUSE(8),
 //RESUME(9),
 //HTTP_PROXY(12),
