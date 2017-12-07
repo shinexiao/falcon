@@ -13,6 +13,7 @@ import (
 	"connector/handler"
 	"strings"
 	"core"
+	"runtime"
 )
 
 const MaxPacketSize = 1024 * 1024
@@ -66,8 +67,8 @@ func (me *TcpConnector) Start(addrs []string) error {
 
 		me.info(fmt.Sprintf("start tcp listen: %s", bind))
 
-		for {
-			me.acceptTcp(listener)
+		for i := 0; i < runtime.NumCPU(); i++ {
+			go me.acceptTcp(listener)
 		}
 
 	}
@@ -82,31 +83,33 @@ func (me *TcpConnector) acceptTcp(listener *net.TCPListener) {
 		err  error
 		r    int
 	)
-	if conn, err = listener.AcceptTCP(); err != nil {
-		me.error(fmt.Sprintf("listener.Accept(%s) error(%v)", listener.Addr().String(), err))
-		return
+	for {
+		if conn, err = listener.AcceptTCP(); err != nil {
+			me.error(fmt.Sprintf("listener.Accept(%s) error(%v)", listener.Addr().String(), err))
+			return
+		}
+		if err = conn.SetKeepAlive(me.Option.TCPKeepalive); err != nil {
+			me.error(fmt.Sprintf("conn.SetKeepAlive() error(%v)", err))
+			return
+		}
+		if err = conn.SetReadBuffer(me.Option.TCPRcvbuf); err != nil {
+			me.error(fmt.Sprintf("conn.SetReadBuffer() error(%v)", err))
+			return
+		}
+		if err = conn.SetWriteBuffer(me.Option.TCPSndbuf); err != nil {
+			me.error(fmt.Sprintf("conn.SetWriteBuffer() error(%v)", err))
+			return
+		}
+		//开启处理
+		c := connection.NewConn(conn, true)
+		go me.serve(c)
+		//负载均衡
+		if r++; r == 1000000 {
+			r = 0
+		}
+		//todo 其他逻辑
+		//开启心跳检测
 	}
-	if err = conn.SetKeepAlive(me.Option.TCPKeepalive); err != nil {
-		me.error(fmt.Sprintf("conn.SetKeepAlive() error(%v)", err))
-		return
-	}
-	if err = conn.SetReadBuffer(me.Option.TCPRcvbuf); err != nil {
-		me.error(fmt.Sprintf("conn.SetReadBuffer() error(%v)", err))
-		return
-	}
-	if err = conn.SetWriteBuffer(me.Option.TCPSndbuf); err != nil {
-		me.error(fmt.Sprintf("conn.SetWriteBuffer() error(%v)", err))
-		return
-	}
-	//开启处理
-	c := connection.NewConn(conn, true)
-	go me.serve(c)
-	//负载均衡
-	if r++; r == 1000000 {
-		r = 0
-	}
-	//todo 其他逻辑
-	//开启心跳检测
 }
 
 //关闭服务
@@ -150,16 +153,33 @@ func (me *TcpConnector) serve(conn *connection.Conn) {
 		} else {
 			//循环读取数据
 			tempBuf = append(tempBuf, buffer[:n]...)
+			//解码心跳
+			//tempBuf = me.decodeHeartbeat(tempBuf, readChan)
 			//解码数据包
-			tempBuf = me.unpack(tempBuf, readChan)
-
+			tempBuf = me.decodeFrames(tempBuf, readChan)
 		}
 	}
 
 }
 
+//解包心跳
+func (me *TcpConnector) decodeHeartbeat(buf []byte, ch chan *protocol.Packet) []byte {
+	var hb_packet int8
+
+	buffer := new(bytes.Buffer)
+	buffer.Write(buf)
+
+	binary.Read(buffer, binary.BigEndian, &hb_packet)
+	if hb_packet == protocol.HB_PACKET_BYTE {
+		ch <- protocol.NewPacket(protocol.CMD_HEARTBEAT)
+		return buf[1:]
+	}
+
+	return buf
+}
+
 //解包消息
-func (me *TcpConnector) unpack(buf []byte, ch chan *protocol.Packet) []byte {
+func (me *TcpConnector) decodeFrames(buf []byte, ch chan *protocol.Packet) []byte {
 
 	bufSize := len(buf)
 

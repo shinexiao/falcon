@@ -9,9 +9,10 @@ import (
 //编码消息体
 func EncodePacket(packet *Packet, out *bytes.Buffer) {
 	var err error
-	if packet.Cmd == HB_PACKET_BYTE {
-		binary.Write(out, binary.BigEndian, HB_PACKET_BYTE)
-	} else {
+	//if packet.Cmd == CMD_HEARTBEAT {
+	//	err = binary.Write(out, binary.BigEndian, HB_PACKET_BYTE)
+	//	checkError(err)
+	//} else {
 		err = binary.Write(out, binary.BigEndian, int32(packet.BodyLength()))
 		checkError(err)
 		err = binary.Write(out, binary.BigEndian, packet.Cmd)
@@ -28,7 +29,7 @@ func EncodePacket(packet *Packet, out *bytes.Buffer) {
 			err = binary.Write(out, binary.BigEndian, packet.Body)
 			checkError(err)
 		}
-	}
+	//}
 }
 
 //错误终止

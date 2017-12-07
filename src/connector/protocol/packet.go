@@ -4,10 +4,10 @@ import "encoding/json"
 
 const (
 	PACKET_HEADER_LEN int  = 13 //头长度
-	FLAG_CRYPTO       int8 = 1  //加密标识
-	FLAG_COMPRESS     int8 = 2  //压缩标识
-	FLAG_BIZ_ACK      int8 = 4  //ack确认标识
-	FLAG_AUTO_ACK     int8 = 8  //自动ack标识
+	FLAG_CRYPTO       int8 = 0x01  //加密标识
+	FLAG_COMPRESS     int8 = 0x02  //压缩标识
+	FLAG_BIZ_ACK      int8 = 0x04  //ack确认标识
+	FLAG_AUTO_ACK     int8 = 0x08  //自动ack标识
 	FLAG_JSON_BODY    int8 = 16 //json消息体
 
 	HB_PACKET_BYTE int8 = -33 //心跳消息
