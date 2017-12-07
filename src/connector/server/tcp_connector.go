@@ -39,6 +39,7 @@ func NewTcpConnector(context core.FalconContext, options ConnectorOptions) *TcpC
 	messageDispatcher.Register(protocol.CMD_UNBIND, handler.NewBindUserHandler())                 // 解绑
 	messageDispatcher.Register(protocol.CMD_ACK, handler.NewAckHandler(context))                  //消息ack
 	messageDispatcher.Register(protocol.CMD_FAST_CONNECT, handler.NewFastConnectHandler(context)) //快速重连
+	messageDispatcher.Register(protocol.CMD_PUSH, handler.NewPushHandler(context))                //上行消息
 
 	return &TcpConnector{
 		messageDispatcher: messageDispatcher,

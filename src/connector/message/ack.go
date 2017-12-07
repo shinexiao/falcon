@@ -22,6 +22,7 @@ func AckMessageFrom(src Message) *AckMessage {
 	msg := &AckMessage{}
 	msg.packet = packet
 	msg.BaseMessage.Child = msg
+	msg.conn = src.Conn()
 
 	return msg
 }
