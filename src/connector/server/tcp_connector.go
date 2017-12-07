@@ -13,7 +13,6 @@ import (
 	"connector/handler"
 	"strings"
 	"core"
-	"runtime"
 )
 
 const MaxPacketSize = 1024 * 1024

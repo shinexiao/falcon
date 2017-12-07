@@ -11,10 +11,9 @@ import (
 )
 
 /**
- * 用户绑定
+ * ack处理
  */
 type AckHandler struct {
-	// 增加验证机制
 	ackTaskQueue *ack.AckTaskQueue
 }
 

@@ -27,7 +27,7 @@ func (me *PushHandler) Handle(packet *protocol.Packet, conn *connection.Conn) {
 		me.info(fmt.Sprintf("send ack for push message=%v", msg))
 	}
 
-	//业务逻辑
+	//todo 业务逻辑
 	fmt.Println("push", string(msg.Content))
 }
 

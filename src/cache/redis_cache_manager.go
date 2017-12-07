@@ -14,9 +14,12 @@ func NewRedisCacheManager() *RedisCacheManager {
 //设置缓存
 func (me *RedisCacheManager) Set(key, value string, expireTime int64) {
 
+	//todo
 }
 
 //获取缓存
 func (me *RedisCacheManager) Get(key string) string {
+
+	//todo
 	return ""
 }
