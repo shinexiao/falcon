@@ -2,7 +2,6 @@ package server
 
 import (
 	"net"
-	"runtime"
 	"github.com/gogap/logrus"
 	"fmt"
 	"connector/protocol"
@@ -14,6 +13,7 @@ import (
 	"connector/handler"
 	"strings"
 	"core"
+	"runtime"
 )
 
 const MaxPacketSize = 1024 * 1024
@@ -51,9 +51,6 @@ func NewTcpConnector(context core.FalconContext, options ConnectorOptions) *TcpC
 //绑定服务端口
 func (me *TcpConnector) Start(addrs []string) error {
 
-	cpus := runtime.NumCPU()
-	runtime.GOMAXPROCS(cpus)
-
 	for _, bind := range addrs {
 
 		addr, err := net.ResolveTCPAddr("tcp4", bind)
@@ -70,10 +67,10 @@ func (me *TcpConnector) Start(addrs []string) error {
 
 		me.info(fmt.Sprintf("start tcp listen: %s", bind))
 
-		//根据cpu开启接收协程
-		for i := 0; i < cpus; i++ {
-			go me.acceptTcp(listener)
+		for {
+			me.acceptTcp(listener)
 		}
+
 	}
 
 	return nil

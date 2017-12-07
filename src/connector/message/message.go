@@ -4,7 +4,6 @@ import (
 	"connector/protocol"
 	"common"
 
-	"sync/atomic"
 	"connector/connection"
 )
 
@@ -16,7 +15,7 @@ const (
 const CompressLimit = 1024
 
 //全局sid增长序列
-var SID_SEQ int32
+//var SID_SEQ int32
 
 type Message interface {
 	Conn() *connection.Conn //获取连接
@@ -123,12 +122,12 @@ func (me *BaseMessage) EncodeBody() {
 }
 
 //生成sessionId
-func (me *BaseMessage) GenSessionId() int32 {
-
-	SID_SEQ = atomic.AddInt32(&SID_SEQ, 1)
-
-	return SID_SEQ
-}
+//func (me *BaseMessage) GenSessionId() int32 {
+//
+//	SID_SEQ = atomic.AddInt32(&SID_SEQ, 1)
+//
+//	return SID_SEQ
+//}
 
 //发送消息
 func (me *BaseMessage) Send() {

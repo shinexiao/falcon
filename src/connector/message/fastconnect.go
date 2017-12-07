@@ -3,6 +3,7 @@ package message
 import (
 	"bytes"
 	"connector/connection"
+	"connector/protocol"
 )
 
 type FastConnectMessage struct {
@@ -13,9 +14,10 @@ type FastConnectMessage struct {
 	MaxHeartbeat int32
 }
 
-func NewFastConnectMessage(conn *connection.Conn) *FastConnectMessage {
+func NewFastConnectMessage(packet *protocol.Packet, conn *connection.Conn) *FastConnectMessage {
 
 	msg := &FastConnectMessage{}
+	msg.packet = packet
 	msg.conn = conn
 	msg.BaseMessage.Child = msg
 

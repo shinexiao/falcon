@@ -57,7 +57,7 @@ func (me *FastConnectHandler) Handle(packet *protocol.Packet, conn *connection.C
 //解码出消息
 func (me *FastConnectHandler) decode(packet *protocol.Packet, conn *connection.Conn) *message.FastConnectMessage {
 
-	msg := message.NewFastConnectMessage(conn)
+	msg := message.NewFastConnectMessage(packet,conn)
 	msg.DecodeBody()
 
 	return msg

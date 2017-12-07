@@ -23,21 +23,6 @@ type HandshakeMessage struct {
 }
 
 //创建消息
-func NewHandshakeMessage(conn *connection.Conn) *HandshakeMessage {
-
-	msg := &HandshakeMessage{}
-
-	packet := protocol.NewPacket(protocol.CMD_HANDSHAKE)
-	packet.SessionId = msg.GenSessionId()
-
-	msg.packet = packet
-	msg.conn = conn
-	msg.BaseMessage.Child = msg
-	
-	return msg
-}
-
-//创建消息
 func NewHandshakeMessagePacket(packet *protocol.Packet, conn *connection.Conn) *HandshakeMessage {
 	msg := &HandshakeMessage{}
 	msg.packet = packet
