@@ -1,8 +1,8 @@
 package connection
 
 import (
-	"common"
-	"security"
+	"falcon/src/security"
+	"falcon/src/common"
 )
 
 type SessionContext struct {

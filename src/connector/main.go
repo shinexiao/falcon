@@ -1,8 +1,8 @@
 package main
 
 import (
-	"connector/server"
-	"common"
+	"falcon/src/connector/server"
+	"falcon/src/common"
 	"github.com/gogap/logrus"
 )
 

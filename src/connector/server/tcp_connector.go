@@ -2,18 +2,18 @@ package server
 
 import (
 	"net"
+	"falcon/src/connector/dispatcher"
+	"falcon/src/connector/protocol"
+	"falcon/src/connector/handler"
 	"runtime"
-	"github.com/gogap/logrus"
 	"fmt"
-	"connector/protocol"
+	"falcon/src/connector/connection"
+	"io"
+	"strings"
 	"bytes"
 	"encoding/binary"
-	"io"
-	"connector/connection"
-	"connector/dispatcher"
-	"connector/handler"
-	"strings"
-	"connector/core"
+	"falcon/src/connector/core"
+	"github.com/gogap/logrus"
 )
 
 const MaxPacketSize = 1024 * 1024

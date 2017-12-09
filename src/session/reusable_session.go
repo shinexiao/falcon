@@ -1,11 +1,11 @@
 package session
 
 import (
-	"connector/connection"
+	"falcon/src/connector/connection"
 	"bytes"
 	"strings"
-	"common"
-	"security"
+	"falcon/src/security"
+	"falcon/src/common"
 )
 
 /**

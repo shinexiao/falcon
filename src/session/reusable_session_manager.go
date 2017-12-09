@@ -2,11 +2,11 @@ package session
 
 import (
 	"fmt"
-	"cache"
-	"connector/connection"
+	"falcon/src/connector/connection"
 	"time"
 	"crypto/md5"
 	"encoding/hex"
+	"falcon/src/cache"
 )
 
 const REUSABLE_SESSION_CACHE_KEY_PREFIX = "falcon:rs:"

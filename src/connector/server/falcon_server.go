@@ -1,8 +1,8 @@
 package server
 
 import (
-	"cache"
-	"session"
+	"falcon/src/session"
+	"falcon/src/cache"
 )
 
 type FalconServer struct {
