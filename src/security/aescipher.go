@@ -2,7 +2,7 @@ package security
 
 import (
 	"bytes"
-	"common"
+	"falcon/src/common"
 )
 
 type AesCipher struct {

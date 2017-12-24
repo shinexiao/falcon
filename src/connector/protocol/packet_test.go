@@ -1,9 +1,6 @@
 package protocol
 
-import (
-	"testing"
-	"github.com/stretchr/testify/assert"
-)
+import "testing"
 
 func TestPacket_HasFlag(t *testing.T) {
 

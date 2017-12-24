@@ -3,8 +3,8 @@ package message
 import (
 	"bytes"
 	"encoding/binary"
-	"github.com/pkg/errors"
 	"fmt"
+	"github.com/pkg/errors"
 )
 
 const INT16_MAX_VALUE = 32767

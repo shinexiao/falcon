@@ -1,11 +1,10 @@
 package message
 
 import (
-	"connector/protocol"
-	"common"
-
+	"falcon/src/connector/connection"
+	"falcon/src/connector/protocol"
 	"sync/atomic"
-	"connector/connection"
+	"falcon/src/common"
 )
 
 const (

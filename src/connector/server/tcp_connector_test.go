@@ -1,9 +1,8 @@
 package server
 
 import (
-	"net"
-	"github.com/stretchr/testify/assert"
 	"testing"
+	"net"
 )
 
 func TestBind(t *testing.T) {

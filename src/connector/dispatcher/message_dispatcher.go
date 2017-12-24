@@ -1,14 +1,14 @@
 package dispatcher
 
 import (
-	"connector/handler"
-	"connector/protocol"
-	"connector/connection"
-	"connector/message"
-	"common"
-	"github.com/gogap/logrus"
-	"fmt"
+	"falcon/src/connector/handler"
+	"falcon/src/connector/protocol"
+	"falcon/src/connector/connection"
+	"falcon/src/connector/message"
 	"runtime"
+	"fmt"
+	"falcon/src/common"
+	"github.com/gogap/logrus"
 )
 
 const (

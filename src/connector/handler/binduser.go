@@ -1,10 +1,10 @@
 package handler
 
 import (
-	"connector/protocol"
-	"connector/connection"
+	"falcon/src/connector/protocol"
+	"falcon/src/connector/connection"
+	"falcon/src/connector/message"
 	"github.com/gogap/logrus"
-	"connector/message"
 )
 
 /**

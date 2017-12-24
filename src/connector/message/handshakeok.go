@@ -1,9 +1,9 @@
 package message
 
 import (
+	"falcon/src/connector/protocol"
+	"falcon/src/connector/connection"
 	"bytes"
-	"connector/protocol"
-	"connector/connection"
 )
 
 /**
